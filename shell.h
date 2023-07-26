@@ -11,6 +11,7 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stddef.h>
 
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
@@ -122,7 +123,7 @@ void print_error(info_t *, char *);
 int print_d(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
-int _exit(info_t *);
+int s_exit(info_t *);
 int _cd(info_t *);
 int _help(info_t *);
 int _history(info_t *);
@@ -135,12 +136,12 @@ void set_info(info_t *, char **);
 void free_info(info_t *, int);
 char *_getenv(info_t *, const char *);
 int _env(info_t *);
-int _setenv(info_t *);
+int ss_setenv(info_t *);
 int _unsetenv(info_t *);
 int populate_env_list(info_t *);
 char **get_environ(info_t *);
-int _unsetenv(info_t *, char *);
-int _setenv(info_t *, char *, char *);
+int s_unsetenv(info_t *, char *);
+int s_setenv(info_t *, char *, char *);
 char *get_history_file(info_t *info);
 int write_history(info_t *info);
 int read_history(info_t *info);
