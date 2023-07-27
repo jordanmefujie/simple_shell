@@ -44,24 +44,25 @@ int hsh(info_t *info, char **av)
 }
 
 /**
- * find_builtin - finds a builtin command
+ * find_builtin - finds a builtin command to the function builtin.
  * @info: the parameter & return info struct
  *
  * Return: -1 if builtin not found,
- *  if builtin executed successfully,
- *  if builtin found but not successful,
- *  if builtin signals exit()
+ *	0 if builtin executed successfully,
+ *	1 if builtin found but not successful,
+ *	2 if builtin signals exit()
  */
 int find_builtin(info_t *info)
 {
 	int j, built_in_ret = -1;
+
 	builtin_table builtintbl[] = {
 		{"exit", s_exit},
 		{"env", _env},
 		{"help", _help},
 		{"history", _history},
-		{"setenv", s_setenv},
-		{"unsetenv", s_unsetenv},
+		{"setenv", ss_setenv},
+		{"unsetenv", ss_unsetenv},
 		{"cd", _cd},
 		{"alias", _alias},
 		{NULL, NULL}
@@ -71,7 +72,7 @@ int find_builtin(info_t *info)
 		if (_strcmp(info->argv[0], builtintbl[j].type) == 0)
 		{
 			info->line_count++;
-			built_in_ret = builtintbl[i].func(info);
+			built_in_ret = builtintbl[j].func(info);
 			break;
 		}
 	return (built_in_ret);

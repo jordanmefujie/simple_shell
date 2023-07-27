@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * _exit - exits the shell
+ * _isexit - exits the shell
  * @info: Structure containing potential arguments. Used to maintain
  * constant function prototype.
  * Return: exits with a given exit status
  * (0) if info.argv[0] != "exit"
  */
-int s_exit(info_t *info)
+int _isexit(info_t *info)
 {
 	int exitcheck;
 
@@ -73,8 +73,8 @@ int _cd(info_t *info)
 	}
 	else
 	{
-		s_setenv(info, "OLDPWD", _getenv(info, "PWD="));
-		s_setenv(info, "PWD", getcwd(buffer, 1024));
+		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
+		_setenv(info, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
 }

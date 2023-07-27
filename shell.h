@@ -17,13 +17,13 @@
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
 
-#define CMD_NORM	
-#define CMD_OR		
-#define CMD_AND		
-#define CMD_CHAIN	
+#define CMD_NORM 0
+#define CMD_OR		1
+#define CMD_AND		2
+#define CMD_CHAIN	3
 
-#define CONVERT_LOWERCASE	
-#define CONVERT_UNSIGNED	
+#define CONVERT_LOWERCASE 1
+#define CONVERT_UNSIGNED  2
 
 #define USE_GETLINE 0
 #define USE_STRTOK 0
@@ -35,7 +35,7 @@ extern char **environ;
 
 /**
  * struct liststr - singly linked list
- * @num: the number 
+ * @num: the number
  * @str: a string
  * @next: pointer to the next node
  */
@@ -46,6 +46,28 @@ typedef struct liststr
 	struct liststr *next;
 } list_t;
 
+/**
+ * struct passinfo - contains pseudo-arguements to pass into a function,
+ *  allowing uniform prototype for function pointer struct
+ * @arg: a string generated from getline containing arguements
+ * @argv:an array of strings generated from arg
+ * @path: a string path for the current command
+ * @argc: the argument count.
+ * @line_count: the error count.
+ * @err_num: the error code for exit()s function.
+ * @linecount_flag: if on count this line of input to the function.
+ * @fname: the function filename
+ * @env: linked lists local copy of environ.
+ * @environ: custom modified copy of environ from environment.
+ * @history: the history node of the function.
+ * @alias: the alias node of the function.
+ * @env_changed: on if environ was changed in the function.
+ * @status: the return status of the last exec'd command.
+ * @cmd_buf: address of pointer to cmd_buf, on if chaining
+ * @cmd_buf_type: CMD_type ||, &&, ;
+ * @readfd: the fd from which to read line input
+ * @histcount: the history line number count to the function.
+ */
 typedef struct passinfo
 {
 	char *arg;
@@ -137,11 +159,11 @@ void free_info(info_t *, int);
 char *_getenv(info_t *, const char *);
 int _env(info_t *);
 int ss_setenv(info_t *);
-int _unsetenv(info_t *);
+int ss_unsetenv(info_t *);
 int populate_env_list(info_t *);
 char **get_environ(info_t *);
-int s_unsetenv(info_t *, char *);
-int s_setenv(info_t *, char *, char *);
+int _unsetenv(info_t *, char *);
+int _setenv(info_t *, char *, char *);
 char *get_history_file(info_t *info);
 int write_history(info_t *info);
 int read_history(info_t *info);
