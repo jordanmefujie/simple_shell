@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * _chain - test if current char in buffer is a chain delimeter.
- * @info: the parameter structure.
- * @buf: the char buffer.
- * @p: address of current position in buffer.
+ * _chain - test if current char in buffer is a chain delim.
+ * @info: the parameter struct of the function.
+ * @buf: the char buffer to the function.
+ * @p: address of current position in buf.
  *
- * Return: 1 if chain delimeter, 0 otherwise.
+ * Return: 1 if chain delim, 0 otherwise
  */
 int _chain(info_t *info, char *buf, size_t *p)
 {
@@ -16,18 +16,18 @@ int _chain(info_t *info, char *buf, size_t *p)
 	{
 		buf[i] = 0;
 		i++;
-		/*info->cmd_buf_type = CMD_OR;*/
+		info->cmd_buf_type = CMD_OR;
 	}
 	else if (buf[i] == '&' && buf[i + 1] == '&')
 	{
 		buf[i] = 0;
 		i++;
-		/*info->cmd_buf_type = CMD_AND;*/
+		info->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[i] == ';') /* the end of command*/
+	else if (buf[i] == ';') /* found end of this command */
 	{
-		buf[i] = 0;
-		/*info->cmd_buf_type = CMD_CHAIN;*/
+		buf[i] = 0; /* replace semicolon with null */
+		info->cmd_buf_type = CMD_CHAIN;
 	}
 	else
 		return (0);
@@ -36,25 +36,26 @@ int _chain(info_t *info, char *buf, size_t *p)
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status.
- * @info: the parameter structure.
+ * check_chain - checks should continue chaining based on last status,
+ * of the function.
+ * @info: the parameter struct to the function.
  * @buf: the char buffer.
  * @p: address of current position in buf.
- * @st: starting position in buf.
- * @len: length of buf.
+ * @st: starting position in buf
+ * @len: length of buf
  *
  * Return: Void
  */
 void check_chain(info_t *info, char *buf, size_t *p, size_t st, size_t len)
 {
-	size_t i = *p;
+	size_t j = *p;
 
 	if (info->cmd_buf_type == CMD_AND)
 	{
 		if (info->status)
 		{
 			buf[st] = 0;
-			i = len;
+			j = len;
 		}
 	}
 	if (info->cmd_buf_type == CMD_OR)
@@ -62,15 +63,16 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t st, size_t len)
 		if (!info->status)
 		{
 			buf[st] = 0;
-			i = len;
+			j = len;
 		}
 	}
 
-	*p = i;
+	*p = j;
 }
 
 /**
  * replace_alias - replaces an aliases in the tokenized string
+ * of the function.
  * @info: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
@@ -100,6 +102,7 @@ int replace_alias(info_t *info)
 
 /**
  * replace_vars - replaces vars in the tokenized string
+ * to the function.
  * @info: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
@@ -140,9 +143,9 @@ int replace_vars(info_t *info)
 }
 
 /**
- * replace_string - replaces string.
- * @prev: address of older/previuos string.
- * @cur: new/current string.
+ * replace_string - replaces string
+ * @prev: address of previous string
+ * @cur: current string
  *
  * Return: 1 if replaced, 0 otherwise
  */
