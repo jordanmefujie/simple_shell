@@ -52,16 +52,17 @@ int hsh(info_t *info, char **av)
  *  if builtin found but not successful,
  *  if builtin signals exit()
  */
-int find_builtin(info_t *info)
+int find_builtin(info_t, char, *)
 {
 	int j, built_in_ret = -1;
+
 	builtin_table builtintbl[] = {
 		{"exit", s_exit},
 		{"env", _env},
 		{"help", _help},
 		{"history", _history},
-		{"setenv", s_setenv},
-		{"unsetenv", s_unsetenv},
+		{"setenv", _setenv},
+		{"unsetenv", _unsetenv},
 		{"cd", _cd},
 		{"alias", _alias},
 		{NULL, NULL}
@@ -71,7 +72,7 @@ int find_builtin(info_t *info)
 		if (_strcmp(info->argv[0], builtintbl[j].type) == 0)
 		{
 			info->line_count++;
-			built_in_ret = builtintbl[i].func(info);
+			built_in_ret = builtintbl[j].func(info);
 			break;
 		}
 	return (built_in_ret);

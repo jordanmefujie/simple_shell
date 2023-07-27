@@ -16,18 +16,18 @@ int _chain(info_t *info, char *buf, size_t *p)
 	{
 		buf[i] = 0;
 		i++;
-		info->cmd_buf_type = CMD_OR;
+		/*info->cmd_buf_type = CMD_OR;*/
 	}
 	else if (buf[i] == '&' && buf[i + 1] == '&')
 	{
 		buf[i] = 0;
 		i++;
-		info->cmd_buf_type = CMD_AND;
+		/*info->cmd_buf_type = CMD_AND;*/
 	}
 	else if (buf[i] == ';') /* the end of command*/
 	{
 		buf[i] = 0;
-		info->cmd_buf_type = CMD_CHAIN;
+		/*info->cmd_buf_type = CMD_CHAIN;*/
 	}
 	else
 		return (0);
@@ -146,9 +146,9 @@ int replace_vars(info_t *info)
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replace_string(char **pre, char *cur)
+int replace_string(char **prev, char *cur)
 {
-	free(*pre);
-	*pre = cur;
+	free(*prev);
+	*prev = cur;
 	return (1);
 }
