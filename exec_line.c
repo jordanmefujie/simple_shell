@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #include "main.h"
-=======
-include "main.h"
->>>>>>> 5c5185edf3f812a9881e638fffda5bc1a7a0ffd1
 
 /**
  * exec_line - finds builtins and commands
